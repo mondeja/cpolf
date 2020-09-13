@@ -55,9 +55,8 @@ class UploadCommand(Command):
         except OSError:
             pass
 
-        self.status("Building Source and Wheel (universal) distribution…")
-        os.system("{0} setup.py sdist bdist_wheel --universal".format(
-            sys.executable))
+        self.status("Building Source distribution…")
+        os.system("{0} setup.py sdist".format(sys.executable))
 
         self.status("Uploading the package to PyPI via Twine…")
         cmd = "twine upload%s dist/*" % (
@@ -78,11 +77,18 @@ setup(
     classifiers=[
         # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
         "License :: OSI Approved :: BSD License",
+        "Operating System :: OS Independent",
+        "Development Status :: 4 - Beta",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: Implementation :: CPython",
+        "Topic :: Scientific/Engineering :: Mathematics",
+        "Topic :: Scientific/Engineering :: Image Processing",
+        "Topic :: Multimedia :: Graphics",
+        "Intended Audience :: Developers",
+        "Intended Audience :: Education",
     ],
     python_requires='>=3.6',
     zip_safe=False,
