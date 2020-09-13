@@ -1,0 +1,7 @@
+/venv
+/build
+/dist
+/*.egg-info
+*.so
+/__main__.py
+/docs/_build/
