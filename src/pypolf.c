@@ -332,5 +332,10 @@ PyMODINIT_FUNC PyInit_polf(void)
         return NULL;
     }
     
+    if (PyModule_AddStringConstant(m, "__title__", "polf") < 0) {
+        Py_DECREF(m);
+        return NULL;
+    }
+    
     return m;
 }
