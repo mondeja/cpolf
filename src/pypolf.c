@@ -2,6 +2,10 @@
 #include <Python.h>
 #include <math.h>
 
+#ifndef M_PI
+    #define M_PI 3.14159265358979323846
+#endif
+
 #define __M_PI_POW M_PI*2
 
 static PyObject* _line_xy(double p0x, double p0y, double p1x, double p1y, double t) {
