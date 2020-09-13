@@ -9,9 +9,7 @@
 #define __M_PI_POW M_PI*2
 
 static PyObject* _line_xy(double p0x, double p0y, double p1x, double p1y, double t) {
-    return Py_BuildValue("[dd]",
-                         (p0x + (p1x - p0x)) * t,
-                         (p0y + (p1y - p0y)) * t);
+    return Py_BuildValue("[dd]", (p0x + p1x) * t, (p0y + p1y) * t);
 }
 
 static PyObject* line_xy(PyObject *self, PyObject *args) {
@@ -326,16 +324,16 @@ PyMODINIT_FUNC PyInit_polf(void)
     if (m == NULL) {
         return NULL;
     }
-    
-    if (PyModule_AddStringConstant(m, "__version__", "0.0.2") < 0) {
+
+    if (PyModule_AddStringConstant(m, "__version__", "0.0.3") < 0) {
         Py_DECREF(m);
         return NULL;
     }
-    
+
     if (PyModule_AddStringConstant(m, "__title__", "polf") < 0) {
         Py_DECREF(m);
         return NULL;
     }
-    
+
     return m;
 }
