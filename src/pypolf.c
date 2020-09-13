@@ -27,6 +27,23 @@ static PyObject* line_xy(PyObject *self, PyObject *args) {
 }
 
 
+static PyObject* line_xyz(PyObject *self, PyObject *args) {
+    double p0x;
+    double p0y;
+    double p0z;
+    double p1x;
+    double p1y;
+    double p1z;
+    double t;
+    
+    if (!PyArg_ParseTuple(args, "ddddddd", &p0x, &p0y, &p0z, &p1x, &p1y, &p1z, &t)) {
+        return NULL;
+    }
+    
+    return Py_BuildValue("[ddd]", (p0x + p1x) * t, (p0y + p1y) * t, (p0z + p1z) * t);
+}
+
+
 static PyObject* cubic_bezier_xy(PyObject *self, PyObject *args) {
     double p0x;
     double p0y;
@@ -202,7 +219,7 @@ static PyObject* elliptical_arc_xy(PyObject *self, PyObject *args) {
 static PyMethodDef PolfMethods[] = {
     {
         "line_xy", line_xy, METH_VARARGS,
-        "Computes the coordinate of a point in a line parametrized"
+        "Computes the coordinate of a point in a 2D rect line parametrized"
         " in the range ``t`` from 0 to 1.\n\n"
         "Algorithm: ``B(t) = (p0 + p1) * t , 0 <= t <= 1``\n\n"
         "Parameters:\n"
@@ -211,20 +228,44 @@ static PyMethodDef PolfMethods[] = {
         "    p1x (float): X value for ending point.\n"
         "    p1y (float): Y value for ending point.\n"
         "    t (float): Number in the range from 0 to 1 that parametrizes"
-        " the location in the line.\n\n"
+        " the location in the 2D rect line.\n\n"
         "Returns:\n"
-        "    list: Point inside the line for the value ``t``.\n\n"
+        "    list: Point inside the 2D rect line for the value ``t``.\n\n"
         "Example:\n\n"
         "    .. code-block:: python\n\n"
         "       >>> line_xy(0, 0, 10, 10, .5)\n"
         "       [5.0, 5.0]\n\n"
         "    .. image:: _static/img/line-xy.png\n"
-        "       :alt: Representation of point inside line.\n"
+        "       :alt: Representation of point inside 2D rect line.\n"
+        "       :align: center\n\n"
+    },
+    {
+        "line_xyz", line_xyz, METH_VARARGS,
+        "Computes the coordinate of a point in a 3D rect line parametrized"
+        " in the range ``t`` from 0 to 1.\n\n"
+        "Algorithm: ``B(t) = (p0 + p1) * t , 0 <= t <= 1``\n\n"
+        "Parameters:\n"
+        "    p0x (float): X value for starting point.\n"
+        "    p0y (float): Y value for starting point.\n"
+        "    p0z (float): Z value for starting point.\n"
+        "    p1x (float): X value for ending point.\n"
+        "    p1y (float): Y value for ending point.\n"
+        "    p1z (float): Z value for ending point.\n"
+        "    t (float): Number in the range from 0 to 1 that parametrizes"
+        " the location in the 3D rect line.\n\n"
+        "Returns:\n"
+        "    list: Point inside the 3D rect line for the value ``t``.\n\n"
+        "Example:\n\n"
+        "    .. code-block:: python\n\n"
+        "       >>> line_xyz(0, 0, 0, 10, 10, 10, .5)\n"
+        "       [5.0, 5.0, 5.0]\n\n"
+        "    .. image:: _static/img/line-xyz.gif\n"
+        "       :alt: Representation of point inside 3D rect line.\n"
         "       :align: center\n\n"
     },
     {
         "cubic_bezier_xy", cubic_bezier_xy, METH_VARARGS,
-        "Computes the coordinate of a point in a cubic Bézier curve"
+        "Computes the coordinate of a point in a 2D cubic Bézier curve"
         " parametrized in the range ``t`` from 0 to 1.\n\n"
         "Algorithm: ``B(t) = (1-t)**3 * p0 + 3*(1-t)**2 * t * p1 + 3*(1-t)**2"
         " * p2 + t**3 * p3 , 0 <= t <= 1``\n\n"
@@ -251,7 +292,7 @@ static PyMethodDef PolfMethods[] = {
     },
     {
         "quadratic_bezier_xy", quadratic_bezier_xy, METH_VARARGS,
-        "Computes the coordinate of a point in a quadratic Bézier curve"
+        "Computes the coordinate of a point in a 2D quadratic Bézier curve"
         " parametrized in the range ``t`` from 0 to 1.\n\n"
         "Algorithm: ``B(t) = (1-t)**2 * p0 + 2*(1-t)*t *p1 + t**2 * p2``\n\n"
         "Parameters:\n"
@@ -268,7 +309,7 @@ static PyMethodDef PolfMethods[] = {
     },
     {
         "elliptical_arc_xy", elliptical_arc_xy, METH_VARARGS,
-        "Computes the coordinate of a point in a elliptical arc parametrized in"
+        "Computes the coordinate of a point in a 2D elliptical arc parametrized in"
         " the range ``t`` from 0 to 1.\nThis implementation follows"
         " `SVG2 specification <https://www.w3.org/TR/SVG2/implnote.html>`_.\n\n"
         "Parameters:\n"
@@ -312,7 +353,7 @@ PyMODINIT_FUNC PyInit_polf(void)
         return NULL;
     }
 
-    if (PyModule_AddStringConstant(m, "__version__", "0.0.4") < 0) {
+    if (PyModule_AddStringConstant(m, "__version__", "0.0.5") < 0) {
         Py_DECREF(m);
         return NULL;
     }

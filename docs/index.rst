@@ -19,6 +19,8 @@ Public API
 
 .. autofunction:: polf.line_xy(p0x: float, p0y: float, p1x: float, p1y: float, t: float) -> list
 
+.. autofunction:: polf.line_xyz(p0x: float, p0y: float, p0z: float, p1x: float, p1y: float, p1z: float, t: float) -> list
+
 .. autofunction:: polf.cubic_bezier_xy(p0x: float, p0y: float, p1x: float, p1y: float, p2x: float, p2y: float, p3x: float, p3y: float, t: float) -> list
 
 .. autofunction:: polf.quadratic_bezier_xy(p0x: float, p0y: float, p1x: float, p1y: float, p2x: float, p2y: float, t: float) -> list
