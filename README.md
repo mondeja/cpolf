@@ -3,8 +3,8 @@
 [![PyPI][pypi-image]][pypi-link]
 [![PyPI Python versions][pypi-versions-image]][pypi-link]
 [![License][license-image]][license-link]
-[![Tests][tests-image]][tests-link]
 [![Documentation status][doc-image]][doc-link]
+[![Tests][tests-image]][tests-link]
 
 Simple library written with the Python C API to calculate points on lines.
 It does not perform any checks on the passed data, but rather follows the
@@ -45,7 +45,7 @@ source venv/bin/activate
 [pypi-versions-image]: https://img.shields.io/pypi/pyversions/polf?logo=python&logoColor=aaaaaa&labelColor=333333
 [license-image]: https://img.shields.io/pypi/l/polf?color=light-green
 [license-link]: https://github.com/mondeja/polf/blob/master/LICENSE
-[tests-image]: https://github.com/mondeja/cpolf/workflows/polf/badge.svg
+[tests-image]: https://github.com/mondeja/cpolf/workflows/tests/badge.svg
 [tests-link]: https://github.com/mondeja/cpolf/actions?query=workflow%3Apolf
 [doc-image]: https://readthedocs.org/projects/polf/badge/?version=latest
 [doc-link]: https://polf.readthedocs.io
