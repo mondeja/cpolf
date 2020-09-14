@@ -161,10 +161,9 @@ static PyObject* elliptical_arc_xy(PyObject *self, PyObject *args) {
                                      (ry * ry) * (_transformedPointX * _transformedPointX);
     const double _cSquareRootDenom = (rx * rx) * (_transformedPointY * _transformedPointY) +
                                      (ry * ry) * (_transformedPointX * _transformedPointX);
-    double _cRadicand = _cSquareNumerator / _cSquareRootDenom;
+    const double _cRadicand = _cSquareNumerator / _cSquareRootDenom;
     double _cCoef;
     if (_cRadicand < 0) {
-        _cRadicand = 0;
         _cCoef = 0;
     } else if (largeArc != sweep) {
         _cCoef = sqrt(_cRadicand);
@@ -353,7 +352,7 @@ PyMODINIT_FUNC PyInit_polf(void)
         return NULL;
     }
 
-    if (PyModule_AddStringConstant(m, "__version__", "0.0.5") < 0) {
+    if (PyModule_AddStringConstant(m, "__version__", "0.0.6") < 0) {
         Py_DECREF(m);
         return NULL;
     }
