@@ -1,0 +1,44 @@
+language: python
+
+jobs:
+  include:
+    # perform a linux build
+    - services: docker
+    # and a mac build
+    - os: osx
+      language: shell
+    # and a windows build
+    - os: windows
+      language: shell
+      before_install:
+        - choco install python --version 3.8.0
+        - export PATH="/c/Python38:/c/Python38/Scripts:$PATH"
+        # make sure it's on PATH as 'python3'
+        - ln -s /c/Python38/python.exe /c/Python38/python3.exe
+
+env:
+  global:
+    # cpolf only works on Python >= 3.6.
+    - CIBW_BUILD="cp36-* cp37-* cp38-*"
+    - CIBW_TEST_REQUIRES=pytest
+    - CIBW_TEST_COMMAND="pytest {project}/test -svv"
+    - TWINE_USERNAME=__token__
+    # Note: TWINE_PASSWORD is set to a PyPI API token in Travis settings
+
+install:
+  # Python 3 is needed to run cibuildwheel for websockets.
+  - if [ "${TRAVIS_OS_NAME:-}" == "osx" ]; then
+      brew update;
+      brew upgrade python;
+    fi
+  # Install cibuildwheel using pip3 to make sure Python 3 is used.
+  - pip3 install --upgrade cibuildwheel
+
+script:
+  - cibuildwheel --output-dir wheelhouse
+  # Upload to PyPI on tags
+  - |
+    if [[ $TRAVIS_TAG ]]; then
+      python3 -m pip install twine
+      python3 -m twine upload --skip-existing wheelhouse/*.whl
+    fi

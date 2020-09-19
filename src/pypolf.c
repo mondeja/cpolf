@@ -352,7 +352,7 @@ PyMODINIT_FUNC PyInit_polf(void)
         return NULL;
     }
 
-    if (PyModule_AddStringConstant(m, "__version__", "0.0.6") < 0) {
+    if (PyModule_AddStringConstant(m, "__version__", "0.0.7") < 0) {
         Py_DECREF(m);
         return NULL;
     }
