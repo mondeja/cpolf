@@ -107,25 +107,21 @@ static PyObject* elliptical_arc_xy(PyObject *self, PyObject *args) {
     double p1x;
     double p1y;
     double t;    
-    
+
     if (!PyArg_ParseTuple(args, "dddddppddd", &p0x, &p0y, &rx, &ry, &xAxisRotation,
                           &largeArc, &sweep, &p1x, &p1y, &t)) {
         return NULL;
     }
-    
+
     // If the endpoints are identical, then this is equivalent to omitting the elliptical arc segment entirely
     if ((p0x == p1x) && (p0y == p1y)) {
         return Py_BuildValue("[dd]", p0x, p0y);
     }
-    
+
     // If rx = 0 or ry = 0 then this arc is treated as a straight line segment joining the endpoints
     if ((rx == 0) || (ry == 0)) {
         return _line_xy(p0x, p0y, p1x, p1y, t);
     }
-
-#ifdef DEBUG
-    printf("\nM_PI: %f | __M_PI_POW: %f\n", M_PI, __M_PI_POW);
-#endif
 
     // In accordance to: http://www.w3.org/TR/SVG/implnote.html#ArcOutOfRangeParameters
     // absolutify radius
@@ -135,18 +131,9 @@ static PyObject* elliptical_arc_xy(PyObject *self, PyObject *args) {
     if (ry < 0) {
         ry *= -1;
     }
-    
-#ifdef DEBUG
-    printf("rx: %f | ry: %f\n", rx, ry);
-#endif
-    
+
     xAxisRotation = fmod((fmod(xAxisRotation, 360) + 360), 360);
     const double _xAxisRotationRadians = xAxisRotation * M_PI / 180;
-
-#ifdef DEBUG
-    printf("xAxisRotation: %f | _xAxisRotationRadians: %f\n", xAxisRotation, _xAxisRotationRadians);
-#endif
-
 
     // Following "Conversion from endpoint to center parameterization"
     // http://www.w3.org/TR/SVG/implnote.html#ArcConversionEndpointToCenter
@@ -156,12 +143,7 @@ static PyObject* elliptical_arc_xy(PyObject *self, PyObject *args) {
     const double _dy = (p0y - p1y) / 2;
     const double _transformedPointX = cos(_xAxisRotationRadians) * _dx + sin(_xAxisRotationRadians) * _dy;
     const double _transformedPointY = (-sin(_xAxisRotationRadians)) * _dx + cos(_xAxisRotationRadians) * _dy;
-    
-#ifdef DEBUG
-    printf("_dx: %f | _dy: %f | _transformedPointX: %f | _transformedPointY: %f\n", _dx, _dy, _transformedPointX, _transformedPointY);
-#endif
-    
-    
+
     // Ensure radii are large enough
     const double _radiiCheck = (_transformedPointX * _transformedPointX) / (rx * rx) +
                                (_transformedPointY * _transformedPointY) / (ry * ry);
@@ -169,11 +151,7 @@ static PyObject* elliptical_arc_xy(PyObject *self, PyObject *args) {
         rx = sqrt(_radiiCheck) * rx;
         ry = sqrt(_radiiCheck) * ry;
     }
-    
-#ifdef DEBUG
-    printf("_radiiCheck: %f | rx: %f | ry: %f\n", _radiiCheck, rx, ry);
-#endif
-    
+
     // Step #2: Compute transformedCenter
     const double _cSquareNumerator = (rx * rx) * (ry * ry) - (rx * rx) *
                                      (_transformedPointY * _transformedPointY) -
@@ -189,17 +167,9 @@ static PyObject* elliptical_arc_xy(PyObject *self, PyObject *args) {
     } else {
         _cCoef = (-(sqrt(_cRadicand)));
     }
-    
-#ifdef DEBUG
-    printf("_cSquareNumerator: %f | _cSquareRootDenom: %f | _cRadicand: %f | _cCoef: %f\n", _cSquareNumerator, _cSquareRootDenom, _cRadicand, _cCoef);
-#endif
-    
+
     const double _transformedCenterX = _cCoef * ((rx * _transformedPointY) / ry);
     const double _transformedCenterY = _cCoef * (-(ry * _transformedPointX) / rx);
-
-#ifdef DEBUG
-    printf("_transformedCenterX: %f | _transformedCenterY: %f\n", _transformedCenterX, _transformedCenterY);
-#endif
 
     // Step #3: Compute center
     const double _centerX = cos(_xAxisRotationRadians) * _transformedCenterX -
@@ -209,10 +179,6 @@ static PyObject* elliptical_arc_xy(PyObject *self, PyObject *args) {
                             cos(_xAxisRotationRadians) * _transformedCenterY +
                             ((p0y + p1y) / 2);
 
-#ifdef DEBUG
-    printf("_centerX: %f | _centerY: %f\n", _centerX, _centerY);
-#endif
-
     // Step #4: Compute start/sweep angles
     // Start angle of the elliptical arc prior to the stretch and rotate operations.
     // Difference between the start and end angles
@@ -220,45 +186,24 @@ static PyObject* elliptical_arc_xy(PyObject *self, PyObject *args) {
     const double _startVectorY = (_transformedPointY - _transformedCenterY) / ry;
     const double _startAngle = _angleBetween(1, 0, _startVectorX, _startVectorY);
 
-#ifdef DEBUG
-    printf("_startVectorX: %f | _startVectorY: %f | _startAngle: %f\n", _startVectorX, _startVectorY, _startAngle);
-#endif
-    
     const double _endVectorX = ((-_transformedPointX) - _transformedCenterX) / rx;
     const double _endVectorY = ((-_transformedPointY) - _transformedCenterY) / ry;
 
-#ifdef DEBUG
-    printf("_endVectorX: %f | _endVectorY: %f\n", _endVectorX, _endVectorY);
-#endif
-    
     double _sweepAngle = _angleBetween(_startVectorX, _startVectorY, _endVectorX, _endVectorY);
 
-#ifdef DEBUG
-    printf("_sweepAngle: %f\n", _sweepAngle);
-#endif
     if ((!sweep) && (_sweepAngle > 0)) {
         _sweepAngle -= __M_PI_POW;
     } else if ((sweep) && (_sweepAngle < 0)) {
         _sweepAngle += __M_PI_POW;
     }
-    
-#ifdef DEBUG
-    printf("_sweepAngle: %f\n", _sweepAngle);
-#endif
 
     _sweepAngle = fmod(_sweepAngle,  __M_PI_POW);
 
-#ifdef DEBUG
-    printf("_sweepAngle: %f\n", _sweepAngle);
-#endif
     // From http://www.w3.org/TR/SVG/implnote.html#ArcParameterizationAlternatives
     const double _angle = _startAngle + _sweepAngle * t;
     const double _ellipseComponentX = rx * cos(_angle);
     const double _ellipseComponentY = ry * sin(_angle);
 
-#ifdef DEBUG
-    printf("_angle: %f | _ellipseComponentX: %f | _ellipseComponentY: %f\n", _angle, _ellipseComponentX, _ellipseComponentY);
-#endif
     return Py_BuildValue(
         "[dd]",
         cos(_xAxisRotationRadians) * _ellipseComponentX - sin(_xAxisRotationRadians) * _ellipseComponentY + _centerX,
@@ -405,7 +350,7 @@ PyMODINIT_FUNC PyInit_polf(void)
         return NULL;
     }
 
-    if (PyModule_AddStringConstant(m, "__version__", "0.0.7") < 0) {
+    if (PyModule_AddStringConstant(m, "__version__", "0.0.8") < 0) {
         Py_DECREF(m);
         return NULL;
     }

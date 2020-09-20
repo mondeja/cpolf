@@ -5,7 +5,7 @@ from shutil import rmtree
 
 from setuptools import setup, Extension, Command
 
-__version__ = "0.0.7"
+__version__ = "0.0.8"
 __title__ = "polf"
 
 HERE = os.path.abspath(os.path.dirname(__file__))
@@ -31,7 +31,8 @@ if os.environ.get("DEBUG"):
 extension = Extension(__title__,
                       language="c",
                       sources=[os.path.join('src', 'pypolf.c')],
-                      define_macros=define_macros)
+                      define_macros=define_macros,
+                      extra_compile_args=extra_compile_args)
 
 
 class UploadCommand(Command):
