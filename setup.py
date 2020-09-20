@@ -5,7 +5,7 @@ from shutil import rmtree
 
 from setuptools import setup, Extension, Command
 
-__version__ = "0.0.8"
+__version__ = "0.0.10"
 __title__ = "polf"
 
 HERE = os.path.abspath(os.path.dirname(__file__))

@@ -13,6 +13,8 @@ jobs:
         # make sure it's on PATH as 'python3'
         - ln -s /c/Python38/python.exe /c/Python38/python3.exe
 
+if: tag IS present
+
 env:
   global:
     # cpolf only works on Python >= 3.6.
@@ -27,9 +29,14 @@ install:
 
 script:
   - cibuildwheel --output-dir wheelhouse
-  # Upload to PyPI on tags
+  # Upload wheels to PyPI on tags and source distribution from linux
   - |
     if [[ $TRAVIS_TAG ]]; then
       python3 -m pip install twine
       python3 -m twine upload --skip-existing wheelhouse/*.whl
+    fi
+  - |
+    if [[ $TRAVIS_TAG ]] && [[ $TRAVIS_OS_NAME = linux ]]; then
+      python3 setup.py sdist
+      python3 -m twine upload --skip-existing dist
     fi
