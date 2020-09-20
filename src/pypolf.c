@@ -108,7 +108,7 @@ static PyObject* elliptical_arc_xy(PyObject *self, PyObject *args) {
     double p1y;
     double t;    
     
-    if (!PyArg_ParseTuple(args, "ddddHppddd", &p0x, &p0y, &rx, &ry, &xAxisRotation,
+    if (!PyArg_ParseTuple(args, "dddddppddd", &p0x, &p0y, &rx, &ry, &xAxisRotation,
                           &largeArc, &sweep, &p1x, &p1y, &t)) {
         return NULL;
     }
@@ -259,13 +259,10 @@ static PyObject* elliptical_arc_xy(PyObject *self, PyObject *args) {
 #ifdef DEBUG
     printf("_angle: %f | _ellipseComponentX: %f | _ellipseComponentY: %f\n", _angle, _ellipseComponentX, _ellipseComponentY);
 #endif
-
-    const double _responseX = cos(_xAxisRotationRadians) * _ellipseComponentX - sin(_xAxisRotationRadians) * _ellipseComponentY + _centerX;
-    const double _responseY = sin(_xAxisRotationRadians) * _ellipseComponentX + cos(_xAxisRotationRadians) * _ellipseComponentY + _centerY;
-#ifdef DEBUG
-    printf("_responseX: %f | _responseY: %f\n", _responseX, _responseY);
-#endif
-    return Py_BuildValue("[dd]", _responseX, _responseY);
+    return Py_BuildValue(
+        "[dd]",
+        cos(_xAxisRotationRadians) * _ellipseComponentX - sin(_xAxisRotationRadians) * _ellipseComponentY + _centerX,
+        sin(_xAxisRotationRadians) * _ellipseComponentX + cos(_xAxisRotationRadians) * _ellipseComponentY + _centerY);
 }
 
 /**
