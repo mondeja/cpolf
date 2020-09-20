@@ -5,6 +5,7 @@
 [![License][license-image]][license-link]
 [![Documentation status][doc-image]][doc-link]
 [![Tests][tests-image]][tests-link]
+[![Wheels][wheels-image]][wheels-link]
 
 Simple library written with the Python C API to calculate points on lines.
 It does not perform any checks on the passed data, but rather follows the
@@ -50,4 +51,6 @@ source venv/bin/activate
 [doc-image]: https://readthedocs.org/projects/polf/badge/?version=latest
 [doc-link]: https://polf.readthedocs.io
 [issue-tracker-link]: https://github.com/mondeja/cpolf/issues
+[wheels-image]: https://img.shields.io/travis/mondeja/cpolf?label=wheels
+[wheels-link]: https://travis-ci.com/github/mondeja/cpolf
 
