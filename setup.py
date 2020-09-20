@@ -24,9 +24,14 @@ EXTRAS = {
 with io.open(os.path.join(HERE, "README.md"), encoding="utf-8") as f:
     LONG_DESCRIPTION = "\n" + f.read()
 
+define_macros = []
+extra_compile_args = []
+if os.environ.get("DEBUG"):
+    define_macros.extend([("DEBUG", "1")])
 extension = Extension(__title__,
                       language="c",
-                      sources=[os.path.join('src', 'pypolf.c')])
+                      sources=[os.path.join('src', 'pypolf.c')],
+                      define_macros=define_macros)
 
 
 class UploadCommand(Command):

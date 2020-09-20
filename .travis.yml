@@ -22,15 +22,11 @@ env:
     - CIBW_BUILD="cp36-* cp37-* cp38-*"
     - CIBW_TEST_REQUIRES=pytest
     - CIBW_TEST_COMMAND="pytest {project}/test -svv"
+    - CIBW_ENVIRONMENT="DEBUG='1'"
     - TWINE_USERNAME=__token__
     # Note: TWINE_PASSWORD is set to a PyPI API token in Travis settings
 
 install:
-  # Python 3 is needed to run cibuildwheel for websockets.
-  - if [ "${TRAVIS_OS_NAME:-}" == "osx" ]; then
-      brew update;
-      brew upgrade python;
-    fi
   # Install cibuildwheel using pip3 to make sure Python 3 is used.
   - pip3 install --upgrade cibuildwheel
 
