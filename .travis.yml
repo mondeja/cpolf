@@ -2,12 +2,9 @@ language: python
 
 jobs:
   include:
-    # perform a linux build
     - services: docker
-    # and a mac build
     - os: osx
       language: shell
-    # and a windows build
     - os: windows
       language: shell
       before_install:
@@ -22,12 +19,10 @@ env:
     - CIBW_BUILD="cp36-* cp37-* cp38-*"
     - CIBW_TEST_REQUIRES=pytest
     - CIBW_TEST_COMMAND="pytest {project}/test -svv"
-    - CIBW_ENVIRONMENT="DEBUG='1'"
+    #- CIBW_ENVIRONMENT="DEBUG='1'"
     - TWINE_USERNAME=__token__
-    # Note: TWINE_PASSWORD is set to a PyPI API token in Travis settings
 
 install:
-  # Install cibuildwheel using pip3 to make sure Python 3 is used.
   - pip3 install https://github.com/joerick/cibuildwheel/archive/master.zip
 
 script:

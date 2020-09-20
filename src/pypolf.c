@@ -260,17 +260,12 @@ static PyObject* elliptical_arc_xy(PyObject *self, PyObject *args) {
     printf("_angle: %f | _ellipseComponentX: %f | _ellipseComponentY: %f\n", _angle, _ellipseComponentX, _ellipseComponentY);
 #endif
 
-#ifdef DEBUG
     const double _responseX = cos(_xAxisRotationRadians) * _ellipseComponentX - sin(_xAxisRotationRadians) * _ellipseComponentY + _centerX;
     const double _responseY = sin(_xAxisRotationRadians) * _ellipseComponentX + cos(_xAxisRotationRadians) * _ellipseComponentY + _centerY;
+#ifdef DEBUG
     printf("_responseX: %f | _responseY: %f\n", _responseX, _responseY);
-    return Py_BuildValue("[dd]", _responseX, _responseY);
-#else
-    return Py_BuildValue(
-        "[dd]",
-        cos(_xAxisRotationRadians) * _ellipseComponentX - sin(_xAxisRotationRadians) * _ellipseComponentY + _centerX,
-        sin(_xAxisRotationRadians) * _ellipseComponentX + cos(_xAxisRotationRadians) * _ellipseComponentY + _centerY);
 #endif
+    return Py_BuildValue("[dd]", _responseX, _responseY);
 }
 
 /**
