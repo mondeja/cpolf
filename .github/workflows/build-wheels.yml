@@ -53,6 +53,7 @@ jobs:
           path: dist/*.tar.gz
 
   pypi-upload:
+    name: Upload to PyPI
     needs:
       - build-wheels
       - build-sdist
