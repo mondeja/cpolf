@@ -3,31 +3,39 @@ import os
 import sys
 from shutil import rmtree
 
-from setuptools import setup, Extension, Command
+from setuptools import Command, Extension, setup
 
-__version__ = "0.0.11"
+
+__version__ = "0.0.12"
 __title__ = "polf"
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 
-TEST_EXTRAS = ["pytest", "flake8"]
+LINT_EXTRAS = [
+    'flake8==3.8.4',
+    'flake8-print==3.1.4',
+    'flake8-implicit-str-concat==0.2.0',
+    'isort==5.6.4',
+    'yamllint==1.25.0',
+]
+TEST_EXTRAS = [
+    'pytest==6.1.2',
+]
 DOC_EXTRAS = [
     'Sphinx>=3.2.1',
     'sphinx-rtd-theme==0.4.3',
 ]
-EXTRAS = {
-    "dev": ["twine", "bump2version"] + TEST_EXTRAS + DOC_EXTRAS,
-    "test": TEST_EXTRAS,
-    "doc": DOC_EXTRAS,
-}
+DEV_EXTRAS = [
+    'twine==3.2.0',
+    'bump2version==1.0.1',
+    'pre-commit==2.9.2',
+] + TEST_EXTRAS + DOC_EXTRAS
 
 with io.open(os.path.join(HERE, "README.md"), encoding="utf-8") as f:
     LONG_DESCRIPTION = "\n" + f.read()
 
 define_macros = []
 extra_compile_args = []
-if os.environ.get("DEBUG"):
-    define_macros.extend([("DEBUG", "1")])
 extension = Extension(__title__,
                       language="c",
                       sources=[os.path.join('src', 'pypolf.c')],
@@ -46,7 +54,7 @@ class UploadCommand(Command):
     @staticmethod
     def status(s):
         """Prints things in bold."""
-        print("\033[1m{0}\033[0m".format(s))
+        sys.stdout.write("\033[1m{0}\033[0m\n".format(s))
 
     def initialize_options(self):
         self.test = None
@@ -103,5 +111,9 @@ setup(
     cmdclass={
         "upload": UploadCommand,
     },
-    extras_require=EXTRAS,
+    extras_require={
+        "dev": DEV_EXTRAS,
+        "test": TEST_EXTRAS,
+        "doc": DOC_EXTRAS,
+    },
 )

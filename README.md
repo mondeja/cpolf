@@ -13,7 +13,9 @@ GIGO processing pattern.
 
 I have written it with the main purpose of learning, but it may be useful in
 some situation or it can serve as a reference to get you started in the
-Python C API. If it has been useful to you, do not hesitate to leave a star.
+Python C API and building multiplatform wheels using
+[cibuildwheel][cibuildwheel-link] using TravisCI. If it has been useful to you,
+do not hesitate to leave a star.
 
 ## Install
 
@@ -53,4 +55,5 @@ source venv/bin/activate
 [issue-tracker-link]: https://github.com/mondeja/cpolf/issues
 [wheels-image]: https://img.shields.io/travis/mondeja/cpolf?label=wheels
 [wheels-link]: https://travis-ci.com/github/mondeja/cpolf
+[cibuildwheel-link]: https://github.com/joerick/cibuildwheel
 

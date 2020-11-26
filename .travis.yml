@@ -21,7 +21,7 @@ env:
     - CIBW_BUILD="cp36-* cp37-* cp38-*"
     - CIBW_TEST_REQUIRES=pytest
     - CIBW_TEST_COMMAND="pytest {project}/test -svv"
-    #- CIBW_ENVIRONMENT="DEBUG='1'"
+    # - CIBW_ENVIRONMENT="DEBUG='1'"
     - TWINE_USERNAME=__token__
 
 install:
