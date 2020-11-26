@@ -48,12 +48,11 @@ source venv/bin/activate
 [pypi-versions-image]: https://img.shields.io/pypi/pyversions/polf?logo=python&logoColor=aaaaaa&labelColor=333333
 [license-image]: https://img.shields.io/pypi/l/polf?color=light-green
 [license-link]: https://github.com/mondeja/polf/blob/master/LICENSE
-[tests-image]: https://github.com/mondeja/cpolf/workflows/tests/badge.svg
-[tests-link]: https://github.com/mondeja/cpolf/actions?query=workflow%3Apolf
+[tests-image]: https://github.com/mondeja/cpolf/workflows/Test/badge.svg
+[tests-link]: https://github.com/mondeja/cpolf/actions?query=event%3Apush
 [doc-image]: https://readthedocs.org/projects/polf/badge/?version=latest
 [doc-link]: https://polf.readthedocs.io
 [issue-tracker-link]: https://github.com/mondeja/cpolf/issues
-[wheels-image]: https://img.shields.io/travis/mondeja/cpolf?label=wheels
-[wheels-link]: https://travis-ci.com/github/mondeja/cpolf
+[wheels-image]: https://github.com/mondeja/cpolf/workflows/Build%20wheels/badge.svg
+[wheels-link]: https://github.com/mondeja/cpolf/actions?query=event%3Arelease+
 [cibuildwheel-link]: https://github.com/joerick/cibuildwheel
-
