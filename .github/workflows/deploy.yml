@@ -1,4 +1,4 @@
-name: Build wheels
+name: Deploy
 
 on:
   release:

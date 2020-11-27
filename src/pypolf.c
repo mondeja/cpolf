@@ -2,11 +2,15 @@
 #include <Python.h>
 #include <math.h>
 
+
 #ifndef M_PI
-    #define M_PI 3.14159265358979323846
+# define M_PI 3.14159265358979323846
 #endif
 
-#define __M_PI_POW M_PI*2
+#ifndef Cpolf_M_PI_POW
+# define Cpolf_M_PI_POW M_PI*2
+#endif
+
 
 static PyObject* _line_xy(double p0x, double p0y, double p1x, double p1y, double t) {
     return Py_BuildValue("[dd]", (p0x + p1x) * t, (p0y + p1y) * t);
@@ -18,11 +22,11 @@ static PyObject* line_xy(PyObject *self, PyObject *args) {
     double p1x;
     double p1y;
     double t;
-    
+
     if (!PyArg_ParseTuple(args, "ddddd", &p0x, &p0y, &p1x, &p1y, &t)) {
         return NULL;
     }
-    
+
     return _line_xy(p0x, p0y, p1x, p1y, t);
 }
 
@@ -35,11 +39,11 @@ static PyObject* line_xyz(PyObject *self, PyObject *args) {
     double p1y;
     double p1z;
     double t;
-    
+
     if (!PyArg_ParseTuple(args, "ddddddd", &p0x, &p0y, &p0z, &p1x, &p1y, &p1z, &t)) {
         return NULL;
     }
-    
+
     return Py_BuildValue("[ddd]", (p0x + p1x) * t, (p0y + p1y) * t, (p0z + p1z) * t);
 }
 
@@ -54,11 +58,11 @@ static PyObject* cubic_bezier_xy(PyObject *self, PyObject *args) {
     double p3x;
     double p3y;
     double t;
-    
+
     if (!PyArg_ParseTuple(args, "ddddddddd", &p0x, &p0y, &p1x, &p1y, &p2x, &p2y, &p3x, &p3y, &t)) {
         return NULL;
     }
-    
+
     return Py_BuildValue(
         "[dd]",
         (1 - t) * (1 - t) * (1 - t) * p0x + 3 * t * (1 - t) * (1 - t) * p1x + 3 * t * t * (1 - t) * p2x + t * t * t * p3x,
@@ -106,7 +110,7 @@ static PyObject* elliptical_arc_xy(PyObject *self, PyObject *args) {
     unsigned short int sweep;
     double p1x;
     double p1y;
-    double t;    
+    double t;
 
     if (!PyArg_ParseTuple(args, "dddddppddd", &p0x, &p0y, &rx, &ry, &xAxisRotation,
                           &largeArc, &sweep, &p1x, &p1y, &t)) {
@@ -192,12 +196,12 @@ static PyObject* elliptical_arc_xy(PyObject *self, PyObject *args) {
     double _sweepAngle = _angleBetween(_startVectorX, _startVectorY, _endVectorX, _endVectorY);
 
     if ((!sweep) && (_sweepAngle > 0)) {
-        _sweepAngle -= __M_PI_POW;
+        _sweepAngle -= Cpolf_M_PI_POW;
     } else if ((sweep) && (_sweepAngle < 0)) {
-        _sweepAngle += __M_PI_POW;
+        _sweepAngle += Cpolf_M_PI_POW;
     }
 
-    _sweepAngle = fmod(_sweepAngle,  __M_PI_POW);
+    _sweepAngle = fmod(_sweepAngle,  Cpolf_M_PI_POW);
 
     // From http://www.w3.org/TR/SVG/implnote.html#ArcParameterizationAlternatives
     const double _angle = _startAngle + _sweepAngle * t;
