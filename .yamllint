@@ -24,7 +24,7 @@ rules:
     indent-sequences: true
     spaces: consistent
     ignore: |
-      .travis.yml
+      .github
   key-duplicates: enable
   key-ordering:
     ignore: |
