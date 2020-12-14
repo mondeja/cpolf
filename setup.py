@@ -19,7 +19,7 @@ LINT_EXTRAS = [
     'yamllint==1.25.0',
 ]
 TEST_EXTRAS = [
-    'pytest==6.1.2',
+    'pytest==6.2.0',
 ]
 DOC_EXTRAS = [
     'Sphinx>=3.2.1',
