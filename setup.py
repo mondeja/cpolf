@@ -26,7 +26,7 @@ DOC_EXTRAS = [
     'sphinx-rtd-theme==0.4.3',
 ]
 DEV_EXTRAS = [
-    'twine==3.2.0',
+    'twine==3.3.0',
     'bump2version==1.0.1',
     'pre-commit==2.9.3',
 ] + TEST_EXTRAS + DOC_EXTRAS
