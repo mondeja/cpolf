@@ -14,7 +14,7 @@ GIGO processing pattern.
 I have written it with the main purpose of learning, but it may be useful in
 some situation or it can serve as a reference to get you started in the
 Python C API and building multiplatform wheels using
-[cibuildwheel][cibuildwheel-link] using Github Actions. If it has been useful
+[cibuildwheel][cibuildwheel-link] and Github Actions. If it has been useful
 to you, do not hesitate to leave a star.
 
 ## Install
