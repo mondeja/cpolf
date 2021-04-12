@@ -11,7 +11,6 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 
-import datetime
 import os
 import sys
 
@@ -19,16 +18,10 @@ import sys
 sys.path.insert(0, os.path.abspath('..'))
 
 # -- Project information -----------------------------------------------------
-_now = datetime.datetime.now()
-_start_copyright_year = 2020
 
 project = 'polf'
-copyright = '%s, Álvaro Mondéjar Rubio' % (
-    str(_start_copyright_year) if _now.year == _start_copyright_year else
-    '%d-%d' % (_start_copyright_year, _now.year)
-)
 author = 'Álvaro Mondéjar Rubio'
-
+copyright = '2020, %s' % author
 
 # -- General configuration ---------------------------------------------------
 
