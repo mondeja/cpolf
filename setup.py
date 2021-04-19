@@ -28,7 +28,7 @@ DOC_EXTRAS = [
 DEV_EXTRAS = [
     'twine==3.4.1',
     'bump2version==1.0.1',
-    'pre-commit==2.12.0',
+    'pre-commit==2.12.1',
 ] + TEST_EXTRAS + DOC_EXTRAS
 
 with io.open(os.path.join(HERE, "README.md"), encoding="utf-8") as f:
