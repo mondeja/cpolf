@@ -30,18 +30,14 @@ pip install polf
 
 ## Contributing (Linux)
 
-First, create a virtual environment and initialize it with:
+Create a virtual environment, initialize it and install development dependencies:
 
 ```
-python3 -m virtualenv venv
+python -m virtualenv venv
 source venv/bin/activate
+python -m pip install -e .[dev]
+pre-commit install
 ```
-
-### Develop commands
-
-- Build documentation: `make docs`
-- Run tests: `make tests`
-- Lint: `make lint`
 
 [pypi-image]: https://img.shields.io/pypi/v/polf
 [pypi-link]: https://pypi.org/project/polf/

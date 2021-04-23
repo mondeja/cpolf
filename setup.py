@@ -16,6 +16,7 @@ LINT_EXTRAS = [
     'flake8-print==3.1.4',
     'flake8-implicit-str-concat==0.2.0',
     'isort==5.6.4',
+    'pre-commit==2.12.1',
     'yamllint==1.25.0',
 ]
 TEST_EXTRAS = [
@@ -26,9 +27,7 @@ DOC_EXTRAS = [
     'sphinx-rtd-theme==0.4.3',
 ]
 DEV_EXTRAS = [
-    'twine==3.4.1',
     'bump2version==1.0.1',
-    'pre-commit==2.12.1',
 ] + TEST_EXTRAS + DOC_EXTRAS
 
 with io.open(os.path.join(HERE, "README.md"), encoding="utf-8") as f:
@@ -114,7 +113,8 @@ setup(
     },
     extras_require={
         "dev": DEV_EXTRAS,
-        "test": TEST_EXTRAS,
         "doc": DOC_EXTRAS,
+        "lint": LINT_EXTRAS,
+        "test": TEST_EXTRAS,
     },
 )
