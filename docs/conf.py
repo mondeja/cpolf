@@ -21,7 +21,7 @@ sys.path.insert(0, os.path.abspath('..'))
 
 project = 'polf'
 author = 'Álvaro Mondéjar Rubio'
-copyright = '2020-2022, %s' % author
+copyright = '2020-2023, %s' % author
 
 # -- General configuration ---------------------------------------------------
 
